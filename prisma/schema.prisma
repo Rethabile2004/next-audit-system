@@ -1,0 +1,36 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+}
+
+model Transaction {
+  id          String   @id @default(cuid()) // Unique ID
+  userId      String                   // Links to Clerk user (who owns this)
+  
+  amount      Float                    // Money amount (e.g., 45.99)
+  type        String                   // "income" or "expense"
+  description String?                  // Optional note: "Groceries", "Salary", etc.
+  category    String                   // "Food", "Rent", "Entertainment", "Salary", etc.
+  date        DateTime                 // Date of the transaction (you choose)
+
+  createdAt   DateTime @default(now())  // When you added it
+  updatedAt   DateTime @updatedAt      // Auto-updates on edit
+
+  @@index([userId]) // Fast lookup by user
+}
+
+// Optional: One-to-one link for future user settings (currency, goals, etc.)
+model Account {
+  id     String @id @default(cuid())
+  userId String @unique // Matches Clerk's user ID exactly – one account per user
+
+  // You can add more later like:
+  // currency String @default("USD")
+  // monthlyBudget Float?
+}

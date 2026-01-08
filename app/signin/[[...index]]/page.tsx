@@ -1,10 +1,14 @@
-import { SignIn } from '@clerk/nextjs';
+import { SignedIn, SignIn } from '@clerk/nextjs';
+
 
 const SignInPage = () => {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-6">
+    <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 mt-10 px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl w-full items-center">
         <div className="space-y-6 text-center md:text-left">
+          <SignedIn>
+            Signed IN User
+          </SignedIn>
           <h1 className="text-4xl md:text-6xl font-bold capitalize">
             Streamline auditing system
           </h1>
